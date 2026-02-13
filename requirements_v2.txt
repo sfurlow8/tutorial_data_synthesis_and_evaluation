@@ -1,0 +1,15 @@
+# Core ML framework
+tensorflow==2.10.0
+
+# Numerical stack (Harmony with SciPy 1.7.3 and pandas 1.5.3 on Py 3.10)
+numpy==1.22.4
+scipy==1.7.3
+pandas==1.5.3
+
+# Plotting / utilities
+matplotlib==3.5.3
+scikit-learn==1.0.2
+lightgbm==3.3.3
+joblib==1.2.0
+shap==0.41.0
+requests==2.28.1
