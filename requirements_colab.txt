@@ -1,5 +1,5 @@
 # Use a TF version compatible with CUDA 12.x wheels on Colab
-tensorflow==2.15.*          # or: tensorflow[and-cuda]==2.15.* (if available)
+# tensorflow==2.15.*          # or: tensorflow[and-cuda]==2.15.* (if available)
 # If you don't need strict pinning, you can also leave it as 'tensorflow'
 
 # Scientific stack compatible with Py3.11/3.12
