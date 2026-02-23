@@ -40,11 +40,11 @@ class Generator(tf.keras.Model):
 
 def gen(modeln, parameter_dict):
     checkpoint_directory = "training_checkpoints_emrwgan_" + modeln
-    checkpoint_prefix = '/YOUR_LOCAL_PATH/GAN_training/' + checkpoint_directory + "/ckpt-"
+    checkpoint_prefix = 'training/GAN_training/' + checkpoint_directory + "/ckpt-"
     generator = Generator(parameter_dict)
 
     checkpoint = tf.train.Checkpoint(generator=generator)
-    manager = tf.train.CheckpointManager(checkpoint, directory='/YOUR_LOCAL_PATH/GAN_training/' + checkpoint_directory, max_to_keep=50)
+    manager = tf.train.CheckpointManager(checkpoint, directory='training/GAN_training/' + checkpoint_directory, max_to_keep=50)
     
     if parameter_dict['load_checkpoint_number'] == 'best':
         status = checkpoint.restore(manager.latest_checkpoint)
@@ -76,7 +76,7 @@ def gen(modeln, parameter_dict):
     for col_name, i in zip(continuous_col_name_list, parameter_dict['continuous_feature_col_ind']):
         xmin, xmax = feature_range[col_name][0], feature_range[col_name][1]
         syn[:, i] = (1 - syn[:, i])*xmin + syn[:,i]*xmax
-    np.save('/YOUR_LOCAL_PATH/GAN_training/syn/emrwgan_model_'+modeln+'_ckpt_'+parameter_dict['load_checkpoint_number']+'.npy', syn)
+    np.save('training/GAN_training/syn/emrwgan_model_'+modeln+'_ckpt_'+parameter_dict['load_checkpoint_number']+'.npy', syn)
 
 
 if __name__ == '__main__':
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     parameter_dict = {}
-    parameter_dict['training_data_path'] = '/YOUR_LOCAL_PATH/preprocessed_training_data.csv'
+    parameter_dict['training_data_path'] = 'training/preprocessed_training_data.csv'
     parameter_dict['feature_range_path'] = '/YOUR_LOCAL_PATH/min_max_log.npy'
     parameter_dict['continuous_feature_col_ind'] = [1456,1457,1458,1459]
     parameter_dict['batchsize'] = 4096
