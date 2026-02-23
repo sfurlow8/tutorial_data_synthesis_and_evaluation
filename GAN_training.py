@@ -59,7 +59,7 @@ class Discriminator(tf.keras.Model):
 def train(modeln, parameter_dict):
     checkpoint_directory = "training_checkpoints_emrwgan_"+modeln
     # checkpoint_prefix = os.path.join(checkpoint_directory, "ckpt")
-    checkpoint_prefix = '/content/drive/MyDrive/mimic_synthetic_tutorial/training/GAN_training/' + checkpoint_directory + "/ckpt-"
+    checkpoint_prefix = '/content/drive/MyDrive/mimic_synthetic_data/training/GAN_training/' + checkpoint_directory + "/ckpt-"
     data = np.array(pd.read_csv(parameter_dict['training_data_path']).values).astype('float32')
 
     dataset_train = tf.data.Dataset.from_tensor_slices(data).shuffle(10000,reshuffle_each_iteration=True).batch(parameter_dict['batchsize'], drop_remainder=True)
@@ -71,7 +71,7 @@ def train(modeln, parameter_dict):
     discriminator = Discriminator(parameter_dict)
 
     checkpoint = tf.train.Checkpoint(generator=generator)
-    manager = tf.train.CheckpointManager(checkpoint, directory='/content/drive/MyDrive/mimic_synthetic_tutorial/training/GAN_training/' + checkpoint_directory, max_to_keep=50)
+    manager = tf.train.CheckpointManager(checkpoint, directory='/content/drive/MyDrive/mimic_synthetic_data/training/GAN_training/' + checkpoint_directory, max_to_keep=50)
 
     @tf.function
     def d_step(real):
@@ -153,8 +153,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     parameter_dict = {}
-    parameter_dict['training_data_path'] = '/content/drive/MyDrive/mimic_synthetic_tutorial/Data/preprocessing/test/normalized_training_data.csv'
-    parameter_dict['feature_range_path'] = '/content/drive/MyDrive/mimic_synthetic_tutorial/Data/preprocessing/test/min_max_log.npy'
+    parameter_dict['training_data_path'] = '/content/drive/MyDrive/mimic_synthetic_data/Data/preprocessing/test/normalized_training_data.csv'
+    parameter_dict['feature_range_path'] = '/content/drive/MyDrive/mimic_synthetic_data/Data/preprocessing/test/min_max_log.npy'
     parameter_dict['continuous_feature_col_ind'] = [1456,1457,1458,1459]
     parameter_dict['batchsize'] = 4096
     parameter_dict['Z_DIM'] = 128
