@@ -17,7 +17,7 @@ class Generator(tf.keras.Model):
         self.output_layer_code = tf.keras.layers.Dense(self.G_DIMS[-1], activation=tf.nn.sigmoid)
         self.output_layer_race = tf.keras.layers.Dense(parameter_dict['race_dimension'], activation=tf.nn.softmax)
 
-    def call(self, x, training):
+    def call(self, x, training=None): # gave training a default value
         h = self.dense_layers[0](x)
         x = tf.nn.relu(self.batch_norm_layers[0](h, training=training))
         for i in range(1,len(self.G_DIMS[:-1])):
@@ -83,7 +83,7 @@ def train(modeln, parameter_dict):
             maxval=1.)
 
         with tf.GradientTape() as disc_tape:
-            synthetic = generator(z, False)
+            synthetic = generator(z, training=False)
             interpolate = real + epsilon * (synthetic - real)
 
             real_output = discriminator(real)
@@ -107,7 +107,7 @@ def train(modeln, parameter_dict):
     def g_step():
         z = tf.random.normal(shape=[parameter_dict['batchsize'], parameter_dict['Z_DIM']])
         with tf.GradientTape() as gen_tape:
-            synthetic = generator(z,True)
+            synthetic = generator(z, training=True)
 
             fake_output = discriminator(synthetic)
 
